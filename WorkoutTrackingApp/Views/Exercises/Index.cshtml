@@ -1,0 +1,19 @@
+﻿@model List<WorkoutTrackingApp.ViewModels.ExerciseViewModel>
+@foreach (var exercise in Model)
+{
+    @*For when I set up the trainer role hopefully soon*@ 
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@exercise.Name</h5>
+            <p class="card-text">@exercise.Description</p>
+
+            <div class="text-end">
+            @if (User.IsInRole("Trainer")) // this is not final yet
+            {
+                <a asp-action="Edit" asp-route-id="@exercise.Id" class="btn btn-primary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@exercise.Id" class="btn btn-danger">Delete</a>
+            }
+            </div>
+        </div>
+    </div>
+}

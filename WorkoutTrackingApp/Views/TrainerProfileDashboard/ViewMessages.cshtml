@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WorkoutTrackingApp.Models.Message>
+@*@model IEnumerable<dynamic>*@
+@{
+    ViewData["Title"] = "View Messages";
+    var userInfos = ViewBag.UserInfos as Dictionary<int, string>;
+}
+<h2>Your Messages</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Recipient</th>
+            <th>Message</th>
+            <th>Workout</th>
+            <th>Exercises</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var message in Model)
+        {
+            <tr>
+                <td>@userInfos[message.SenderId]</td>
+                <td>@userInfos[message.RecipientId]</td>
+                <td>@message.Content</td>
+                <td>@message.SelectedWorkout?.Name</td>
+                <td>@message.SelectedExercise?.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

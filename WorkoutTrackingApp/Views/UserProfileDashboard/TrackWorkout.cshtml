@@ -1,0 +1,27 @@
+﻿@model WorkoutTrackingApp.ViewModels.TrackedWorkoutViewModel
+
+<h2>Track Workout: @Model.WorkoutName</h2>
+
+<form asp-action="TrackWorkout" asp-controller="UserProfileDashboard" method="post">
+    <input type="hidden" asp-for="WorkoutId" />
+    <div>
+        <label asp-for="DateCompleted">Date Completed</label>
+        <input asp-for="DateCompleted" type="date" />
+    </div>
+
+    <div>
+        <label>Check off Completed Exercises:</label>
+        @foreach (var exercise in Model.Exercises)
+        {
+            <div>
+                <input type="hidden" asp-for="@exercise.Id" />
+                <input type="hidden" asp-for="WorkoutName" />
+                <input type="checkbox" asp-for="@exercise.IsCompleted" />
+                <label asp-for="@exercise.IsCompleted">@exercise.Name</label>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Track</button>
+</form>
+

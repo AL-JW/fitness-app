@@ -1,0 +1,57 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Featured Workouts</h1>
+    <div class="row">
+        @foreach (var workout in Model.Workouts)
+        {
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                   
+                    <div class="card-body">
+                        <h5 class="card-title">@workout.Name</h5>
+                        <!-- Dropdown Description Button -->
+                        <button class="btn btn-outline-secondary btn-sm" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseDescription@(workout.WorkoutID)"
+                                aria-expanded="false"
+                                aria-controls="collapseDescription@(workout.WorkoutID)">
+                            View Description
+                        </button>
+
+                        <!-- Workout Description -->
+                        <div class="collapse mt-2" id="collapseDescription@(workout.WorkoutID)">
+                            <p class="card-text">@workout.Description</p>
+                        </div>
+
+                        @if (workout.Exercises.Any())
+                        {
+                            <button class="btn btn-outline-info btn-sm mt-2" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExercises@(workout.WorkoutID)"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExercises@(workout.WorkoutID)">
+                                View Exercises
+                            </button>
+
+                        <!-- Exercise Content Dropdown -->
+                        <div class="collapse" id="collapseExercises@(workout.WorkoutID)">
+                            <ul class="list-group list-group-flush mt-2">
+                                @foreach (var exercise in workout.Exercises)
+                                {
+                                    <li class="list-group-item">@exercise.Name</li>
+                                }
+                            </ul>
+                        </div>
+                        }                     
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿@model WorkoutTrackingApp.ViewModels.WorkoutViewModel
+
+<h2>Delete Workout</h2>
+<div>
+    <h4>@Model.Name by @Model.Author</h4>
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="WorkoutID" />
+        <p>Are you sure you want to delete this workout?</p>
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-default">Cancel</a>
+    </form>
+</div>

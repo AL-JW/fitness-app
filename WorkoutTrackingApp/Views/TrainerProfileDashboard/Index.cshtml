@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Trainer Dashboard";
+}
+
+  @if (!User.Identity.IsAuthenticated || !User.IsInRole("Trainer"))
+    {
+        <div class="container my-5 text-center">
+            <p>Access Denied.</p>
+        </div>
+    }
+
+ else
+    {
+        <div class="container my-5">
+            <h1 class="text-center mb-4">Trainer Dashboard</h1>
+
+            <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-4 text-center mb-4">
+                    <a class="btn btn-primary mb-2" asp-controller="Workouts" asp-action="Create">Create New Workout</a><br>
+                    <a class="btn btn-primary" asp-controller="Exercises" asp-action="Create">Create New Exercise</a>
+                </div>
+
+                <!-- Middle Column -->
+                <div class="col-md-4 text-center mb-4">
+                    <a class="btn btn-primary mb-2" asp-controller="Workouts" asp-action="Index">Manage Existing Workouts</a><br>
+                    <a class="btn btn-primary" asp-controller="Exercises" asp-action="Index">Manage Existing Exercises</a>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-4 text-center">
+                    <a href="@Url.Action("SendMessage", "TrainerProfileDashboard")" class="btn btn-primary mb-2">Message a Subscriber</a><br>
+                    <a href="@Url.Action("ViewMessages", "TrainerProfileDashboard")" class="btn btn-secondary mb-2">View Messages</a><br>
+                    <a href="@Url.Action("ViewSubscriberWorkouts", "TrainerProfileDashboard")" class="btn btn-primary">View All Subscriber's Workouts</a>
+                </div>
+            </div>
+        </div>
+    }

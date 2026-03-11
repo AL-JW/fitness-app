@@ -1,0 +1,37 @@
+﻿@model WorkoutTrackingApp.ViewModels.ExerciseViewModel
+@{
+    bool isEditMode = Model != null && Model.Id > 0;
+    ViewData["Title"] = isEditMode ? "Edit Exercise" : "Create Exercise";
+}
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="@((isEditMode) ? "Edit" : "Create")" method="post">
+    @if (isEditMode)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <!-- Here is for the fields to fill exercise properties -->
+    <div class="form-group">
+        <label asp-for="Name">Exercise Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+        <label asp-for="Author">Author Name</label>
+        <input asp-for="Author" class="form-control" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+
+        <label asp-for="Description">Exercise Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+
+        <label asp-for="Intensity">Exercise Instensity</label>
+        <input asp-for="Intensity" class="form-control" />
+        <span asp-validation-for="Intensity" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">@((isEditMode) ? "Save Changes" : "Create")</button>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

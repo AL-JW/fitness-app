@@ -1,0 +1,79 @@
+﻿@model WorkoutTrackingApp.ViewModels.UserDashboardViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    //<h1>UserDashBoard</h1>
+    ViewData["Title"] = "User Dashboard";   
+}
+
+
+<div class = "container my-5">
+    
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6 text-md-start text-center">
+                <a class="btn btn-success ms-md-2 mt-2 mt-md-0" asp-controller="UserProfileDashboard" asp-action="SelectedWorkouts">Track A Workout</a>
+                <a class="btn btn-primary mb-2 mb-md-0" asp-controller="Workouts" asp-action="Index">View Workouts</a>
+                
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6 text-md-end text-center mt-3 mt-md-0">
+                <a href="@Url.Action("SendMessage", "UserProfileDashboard")" class="btn btn-primary mb-2">Send Message to Trainer</a><br>
+                <a href="@Url.Action("ViewMessages", "UserProfileDashboard")" class="btn btn-secondary mb-2">View Messages</a><br>
+                <a asp-page="/SubscriberProfile" class="btn btn-info">View your Profile</a><br>
+            </div>
+        </div>
+    
+    <br>
+
+    <h2 class = "text-center mb-3>Welcome back, @Model.UserName!</h2>
+
+    <div class="row justify-content-center">
+        <div class="row justify-content-center">
+            <div class = "card h-100">
+                <div class = "card-body">
+                    <h3 class="card-title">User Details</h3>
+                    <p>Email: @Model.Email</p>
+                    <p>Subscription Status: @(Model.IsSubscribed ? $"Active until @Model.SubscriptionEndDate.ToString(\"MM/dd/yyyy\")" : "Not Subscribed")</p>
+                 </div>
+            </div>
+         </div>
+         <br>
+        <div class="row justify-content-center">
+             <div class = "card h-100">
+                 <div class = "card-body">
+                     <h3 class = "card-title">Recent Workouts</h3>
+                     @if (Model.RecentWorkouts.Any())
+                     {
+                         
+                         <ul class="list-group list-group-flush">
+                             @foreach (var workout in Model.RecentWorkouts)
+                             {            
+                                 <li class="list-group-item">
+                                <h3>@workout.Name</h3>
+                                <p>@workout.Description</p>
+                                <p>Completed on: @workout.DateCompleted?.ToString("MM/dd/yyyy")</p>
+                                </li>
+                             }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No recent workouts found.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+﻿@model List<WorkoutTrackingApp.ViewModels.SubscriberViewModel>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Subscriber Workouts</h2>
+
+    @foreach (var subscriber in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">Workouts for @subscriber.Email</h3>
+
+                @foreach (var workout in subscriber.TrackedWorkouts)
+                {
+                    <div class="mb-3">
+                        <h4>@workout.WorkoutName</h4>
+                        <p>Date Completed: @workout.DateCompleted.ToShortDateString()</p>
+
+                        <!-- Button for a dropdown exercises list -->
+                        @if (workout.Exercises.Any())
+                        {
+                            <button class="btn btn-outline-secondary btn-sm" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExercises@(workout.WorkoutId)"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExercises@(workout.WorkoutId)">
+                                View Exercises
+                            </button>
+                            <div class="collapse mt-2" id="collapseExercises@(workout.WorkoutId)">
+                                <ul class="list-group list-group-flush">
+                                    @foreach (var exercise in workout.Exercises)
+                                    {
+                                        <li class="list-group-item">@exercise.Name</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+

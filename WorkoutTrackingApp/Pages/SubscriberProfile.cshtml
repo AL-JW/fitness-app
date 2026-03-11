@@ -1,0 +1,48 @@
+﻿@page
+@model SubscriberProfileModel
+@{
+    // Transferred the home page froma controller to a razor page
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+    // This shall be the home page that everyone lands on.
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class ="text-center mb-4">Profile</h1>
+
+            <div class = "card mb-3">
+                <div class= "card-body">
+                    <h2 class = "card-title">Username: @Model.Username</h2>
+                    <h3 class=" = card-subtitle mb-3">Workout Progress</h3>
+                    
+                    @if (Model.TrackedWorkouts != null && Model.TrackedWorkouts.Any())
+                    {
+                        <ul class= "list-group list-group-flush">
+                            @foreach (var workout in Model.TrackedWorkouts)
+                            {
+                                <li>@workout.Workout.Name - Date: @workout.DateCompleted.ToShortDateString()</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No tracked workouts found.</p>
+                    }
+                </div>
+            </div>
+
+            <div class = "card">
+                <div class=" = "card-body">
+                    <h3 class = "card-title"> Share Profile </h3>
+                    <p class = "card-text">Share this link to your profile: </p>
+                    <a href="@Url.Page("/SubscriberProfile", new { username = Model.Username })">@Url.Page("/Subscriberrofile", new { username = Model.Username })</a>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+  
+
+

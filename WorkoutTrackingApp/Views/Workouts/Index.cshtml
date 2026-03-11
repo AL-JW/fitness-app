@@ -1,0 +1,56 @@
+﻿@model IEnumerable<WorkoutTrackingApp.ViewModels.WorkoutViewModel>
+
+@*
+    // Workouts listed here for guests and everyone visiting the app to view
+    Also the details of the workouts as well maybe?
+    Also will try to add the delete action method funcionality to the index here so a user can click delete when viewing the list of workouts
+    Actually no, users should only be able to delete workouts that they created or edited, not ones that are build in and uploaded by trainers
+
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+*@
+@{
+}
+
+<!--Might move this code into a login partial to make it more tightly-coupled. -->
+@foreach (var workout in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@workout.Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@workout.Author</h6>
+            <p class="card-text">@workout.Description</p>
+
+
+
+            <!-- Button for a dropdown exercises list -->
+            @if (workout.Exercises.Any())
+            {
+                <button class="btn btn-outline-secondary btn-sm" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseExercises@(workout.WorkoutID)"
+                        aria-expanded="false"
+                        aria-controls="collapseExercises@(workout.WorkoutID)"
+                        title="Show exercises">
+                    <i class="bi bi-list-ul"></i> Exercises
+                </button>
+                <div class="collapse mt-2" id="collapseExercises@(workout.WorkoutID)">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var exercise in workout.Exercises)
+                        {
+                            <li class="list-group-item">@exercise.Name - @exercise.Description</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            @if (User.IsInRole("Trainer"))
+            {
+                        <div class="text-end mt-2">
+                            <a asp-action="Edit" asp-route-id="@workout.WorkoutID" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@workout.WorkoutID" class="btn btn-danger ms-1" onclick="return confirm('Are you sure you want to delete this?');">Delete</a>
+                        </div>
+            }
+        </div>
+    </div>
+}

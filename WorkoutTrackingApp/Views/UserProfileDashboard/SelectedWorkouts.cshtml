@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WorkoutTrackingApp.ViewModels.WorkoutViewModel>
+
+
+
+<h2>Select a Workout</h2>
+
+@foreach (var workout in Model)
+{
+    <div>
+        <h3>@workout.Name</h3>
+        <p>@workout.Description</p>
+        <!-- Button to track this workout -->
+        <form asp-action="TrackWorkout" asp-controller="UserProfileDashboard" method="get">
+            <input type="hidden" name="workoutId" value="@workout.WorkoutID" />
+            <button type="submit" class="btn btn-primary">Track this Workout</button>
+        </form>
+    </div>
+}
+

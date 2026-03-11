@@ -1,0 +1,57 @@
+﻿<!--Model Being used to access workout properties-->
+@model WorkoutTrackingApp.ViewModels.WorkoutViewModel
+@{
+    bool isEditMode = Model != null && Model.WorkoutID > 0; // Use the ViewModel property
+    ViewData["Title"] = isEditMode ? "Edit Workout" : "Create Workout";
+    // Get the selected exercises if in edit mode, otherwise create an empty list
+    var selectedExercises = isEditMode ? Model.SelectedExercises : new List<int>(); 
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="@((isEditMode) ? "Edit" : "Create")" method="post">
+    @if (isEditMode)
+    {
+        <input type="hidden" asp-for="WorkoutID" />
+    }
+
+    <!--Here are the fields for the workout name and author-->
+    <div class="form-group">
+        <label asp-for="Name">Workout Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+        <label asp-for="Author">Author</label>
+        <input asp-for="Author" class="form-control" /> 
+        <span asp-validation-for="Author" class="text-danger"></span>
+
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+
+        @if (ViewBag.ExerciseList != null)
+        {
+            <label>Select Exercises</label>
+            @foreach (var exercise in ViewBag.ExerciseList)
+            {
+                <div class="form-check">
+                    <input type="checkbox" name="SelectedExercises" value="@exercise.ExerciseId" class="form-check-input"
+                    @(selectedExercises.Contains(exercise.ExerciseId) ? "checked" : "") />
+                    <label class="form-check-label">@exercise.Name</label>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No exercises available to select.</p>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">@((isEditMode) ? "Save Changes" : "Create")</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
